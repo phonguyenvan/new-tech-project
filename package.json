@@ -1,0 +1,11 @@
+{
+  "name": "new-tech-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/phonguyenvan/new-tech-project.git",
+  "author": "Van Pho Nguyen <vanpho02@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "sequelize": "^5.2.9"
+  }
+}
