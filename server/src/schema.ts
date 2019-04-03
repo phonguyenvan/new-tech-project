@@ -1,3 +1,4 @@
+import { Sequelize } from 'sequelize';
 import {
     GraphQLObjectType,
     GraphQLInt,
@@ -5,6 +6,7 @@ import {
     GraphQLList,
     GraphQLSchema
 } from 'graphql';
+import { User, Todo } from './refs';
 
 const userType = new GraphQLObjectType({
     name: 'User',
@@ -28,126 +30,38 @@ const todoType = new GraphQLObjectType({
 const rootQueryType = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
+        user: {
+            type: userType,
+            args: { user_id: { type: GraphQLInt } },
+            resolve: async (parent, args) => {
+                const whereClause = {
+                    where: { user_id: args.user_id },
+                    include: [{ model: Todo, where: { user_id: Sequelize.col('todos.user_id') } }]
+                };
+                const user = await User.findOne(whereClause);
+                return user.toJSON();
+            }
+        },
+        todo: {
+            type: todoType,
+            args: { todo_id: { type: GraphQLInt } },
+            resolve: async (parent, args) => {
+                const todo = await Todo.findOne({ where: { todo_id: args.todo_id } });
+                return todo.toJSON();
+            }
+        },
         users: {
             type: new GraphQLList(userType),
             resolve: async () => {
-                const mockUsers1: any = {
-                    user_id: 1,
-                    email: 'phonguyen@gmail.com',
-                    name: 'Pho',
-                    language: 'vn',
-                    created: '2019-04-04T00:24:24.000Z',
-                    modified: null,
-                    todos:
-                        [{
-                            todo_id: 1,
-                            description: 'Pho creates users.',
-                            created: '2019-04-04T00:24:24.000Z',
-                            modified: null,
-                            user_id: 1
-                        },
-                        {
-                            todo_id: 2,
-                            description: 'Pho creates more users.',
-                            created: '2019-04-04T00:24:24.000Z',
-                            modified: null,
-                            user_id: 1
-                        },
-                        {
-                            todo_id: 3,
-                            description: 'Pho creates more clients.',
-                            created: '2019-04-04T00:24:24.000Z',
-                            modified: null,
-                            user_id: 1
-                        }]
-                }
-                const mockUsers2: any = {
-                    user_id: 2,
-                    email: 'ngannguyen@gmail.com',
-                    name: 'Ngan',
-                    language: 'en',
-                    created: '2019 - 04 - 04T00: 24: 24.000Z',
-                    modified: null,
-                    todos:
-                        [{
-                            todo_id: 4,
-                            description: 'Ngan creates Todos.',
-                            created: '2019 - 04 - 04T00: 24: 24.000Z',
-                            modified: null,
-                            user_id: 2
-                        },
-                        {
-                            todo_id: 5,
-                            description: 'Ngan creates big mistake.',
-                            created: '2019 - 04 - 04T00: 24: 24.000Z',
-                            modified: null,
-                            user_id: 2
-                        }]
-                }
-                const mockUsers3: any = {
-                    user_id: 3,
-                    email: 'trannguyen@gmail.com',
-                    name: 'Tran',
-                    language: 'fn',
-                    created: '2019-04-04T00:24:24.000Z',
-                    modified: null,
-                    todos:
-                        [{
-                            todo_id: 6,
-                            description: 'Tran creates Migrations.',
-                            created: '2019-04-04T00:24:24.000Z',
-                            modified: null,
-                            user_id: 3
-                        }]
-                }
-                return [mockUsers1, mockUsers2, mockUsers3];
+                const users = await User.findAll({ include: [{ model: Todo, where: { user_id: Sequelize.col('todos.user_id') } }] });
+                return users;
             }
         },
         todos: {
-            type: new GraphQLList(userType),
+            type: new GraphQLList(todoType),
             resolve: async () => {
-                return [{
-                    todo_id: 1,
-                    description: 'Pho creates users.',
-                    created: '2019-04-04T00:24:24.000Z',
-                    modified: null,
-                    user_id: 1
-                },
-                {
-                    todo_id: 2,
-                    description: 'Pho creates more users.',
-                    created: '2019-04-04T00:24:24.000Z',
-                    modified: null,
-                    user_id: 1
-                },
-                {
-                    todo_id: 3,
-                    description: 'Pho creates more clients.',
-                    created: '2019-04-04T00:24:24.000Z',
-                    modified: null,
-                    user_id: 1
-                },
-                {
-                    todo_id: 4,
-                    description: 'Ngan creates Todos.',
-                    created: '2019-04-04T00:24:24.000Z',
-                    modified: null,
-                    user_id: 2
-                },
-                {
-                    todo_id: 5,
-                    description: 'Ngan creates big mistake.',
-                    created: '2019-04-04T00:24:24.000Z',
-                    modified: null,
-                    user_id: 2
-                },
-                {
-                    todo_id: 6,
-                    description: 'Tran creates Migrations.',
-                    created: '2019-04-04T00:24:24.000Z',
-                    modified: null,
-                    user_id: 3
-                }];
+                const todos = await Todo.findAll({});
+                return todos;
             }
         }
     }
