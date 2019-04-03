@@ -1,5 +1,5 @@
 import { User, Todo } from './refs';
-import { Sequelize } from 'sequelize';
+import { Sequelize, Includeable } from 'sequelize';
 // insert users
 
 async function insertUser() {
@@ -11,8 +11,8 @@ async function insertUser() {
 }
 
 async function queryUserById(id: string | number) {
-    const user = await User.findOne({ where: { user_id: id } }) as any;
-    console.log(user.dataValues);
+    const user = await User.findOne({ where: { user_id: id }, include: [{ model: Todo, where: { user_id: Sequelize.col('todos.user_id') } }] });
+    console.log(user.toJSON());
 }
 
 async function queryTodoById(id: string | number) {
@@ -21,7 +21,7 @@ async function queryTodoById(id: string | number) {
 }
 
 async function start() {
-    await queryTodoById(1);
+    await queryUserById(2);
     process.exit(0);
 }
 

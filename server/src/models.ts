@@ -7,7 +7,7 @@ export class TodoModel extends Model {
 }
 
 const todoAttributes: ModelAttributes = {
-    user_id: {
+    todo_id: {
         type: new DataTypes.INTEGER(),
         autoIncrement: true,
         primaryKey: true
@@ -81,3 +81,4 @@ type UserStatic = typeof Model & {
 
 export const User = <UserStatic>sequelize.define('users', userAttributes, { createdAt: 'created', updatedAt: 'modified' });
 Todo.belongsTo(User, { foreignKey: 'user_id' });
+User.hasMany(Todo, {foreignKey: 'user_id', sourceKey: 'user_id'});
