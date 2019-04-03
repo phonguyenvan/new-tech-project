@@ -7,7 +7,7 @@ exports.up = async function (knex, Promise) {
         table.string('name', 50).notNullable();
         table.string('email', 50).notNullable();
         table.string('language', 50).notNullable();
-        table.dateTime('created').notNullable();
+        table.dateTime('created').notNullable().defaultTo(knex.fn.now(6));
         table.dateTime('modified').nullable();
     });
 };

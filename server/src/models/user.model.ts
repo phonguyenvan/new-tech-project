@@ -1,8 +1,8 @@
 import { Model, DataTypes, ModelAttributes, BuildOptions } from 'sequelize';
-import { sequelize } from '../refs';
+import { sequelize, TodoModel } from '../refs';
 
 export class UserModel extends Model {
-    public id: number;
+    public user_id: number;
     public email: string;
     public name: string;
     public language: 'en' | 'vn' | 'fr';
