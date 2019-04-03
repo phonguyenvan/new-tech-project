@@ -1,5 +1,39 @@
 import { Model, DataTypes, ModelAttributes, BuildOptions } from 'sequelize';
-import { sequelize, TodoModel } from '../refs';
+import { sequelize } from './refs';
+
+export class TodoModel extends Model {
+    public todo_id: number;
+    public description: string;
+}
+
+const todoAttributes: ModelAttributes = {
+    user_id: {
+        type: new DataTypes.INTEGER(),
+        autoIncrement: true,
+        primaryKey: true
+    },
+    description: {
+        type: new DataTypes.STRING(256),
+        unique: true,
+        allowNull: false
+    },
+    created: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        field: 'created'
+    },
+    modified: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        field: 'modified'
+    }
+}
+
+type TodoStatic = typeof Model & {
+    new(values?: object, options?: BuildOptions): TodoModel;
+}
+
+export const Todo = <TodoStatic>sequelize.define('todos', todoAttributes, { createdAt: 'created', updatedAt: 'modified' });
 
 export class UserModel extends Model {
     public user_id: number;
@@ -46,3 +80,4 @@ type UserStatic = typeof Model & {
 }
 
 export const User = <UserStatic>sequelize.define('users', userAttributes, { createdAt: 'created', updatedAt: 'modified' });
+Todo.belongsTo(User, { foreignKey: 'user_id' });
