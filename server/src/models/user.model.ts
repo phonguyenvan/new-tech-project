@@ -9,7 +9,7 @@ export class UserModel extends Model {
 }
 
 const userAttributes: ModelAttributes = {
-    id: {
+    user_id: {
         type: new DataTypes.INTEGER(),
         autoIncrement: true,
         primaryKey: true
@@ -28,11 +28,21 @@ const userAttributes: ModelAttributes = {
         type: new DataTypes.STRING(5),
         unique: true,
         allowNull: false
+    },
+    created: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        field: 'created'
+    },
+    modified: {
+        type: DataTypes.DATE,
+        allowNull: true,
+        field: 'modified'
     }
 }
 
 type UserStatic = typeof Model & {
-    new (values?: object, options?: BuildOptions): UserModel;
+    new(values?: object, options?: BuildOptions): UserModel;
 }
 
-export const User = <UserStatic>sequelize.define('users', userAttributes);
+export const User = <UserStatic>sequelize.define('users', userAttributes, { createdAt: 'created', updatedAt: 'modified' });
