@@ -20,8 +20,14 @@ async function queryTodoById(id: string | number) {
     console.log(todo.toJSON());
 }
 
+async function queryAllTodos() {
+    const todos = await Todo.findAll({});
+    const data = todos.map(todo => todo.toJSON());
+    console.log(data);
+}
+
 async function start() {
-    await queryUserById(2);
+    await queryAllTodos();
     process.exit(0);
 }
 
