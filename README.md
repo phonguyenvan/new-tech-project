@@ -6,8 +6,11 @@
 1. Database
 
     `npm install -g knex`
+
     `yarn`
+
     `knex migrate:latest`
+    
     `knex seed:run`
 2. Server
 
