@@ -1,0 +1,13 @@
+{
+    "KEY": "FRENCH",
+    "EMAIL": {
+        "REGISTRATION": {
+            "SUBJECT": "%{firstName} Des yeux qui font baisser les miens",
+            "BODY": "Un rire qui se perd sur sa bouche\nVoilà le portrait sans retouche\nDe l'homme auquel j'appartiens"
+        },
+        "LOGIN": {
+            "SUBJECT": "%{firstName}, Quand il me prend dans ses bras",
+            "BODY": "Qu'il me parle de tout bas\nJe vois la vie en rose\nIl me dit des mots d'amour\nDes mots de tous les jours"
+        }
+    }
+}

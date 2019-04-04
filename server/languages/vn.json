@@ -1,0 +1,13 @@
+{
+    "KEY": "VIETNAMESE",
+    "EMAIL": {
+        "REGISTRATION": {
+            "SUBJECT": "Chào %{firstName}, Google đóng cửa kênh Youtube",
+            "BODY": "Google đóng cửa kênh Youtube nửa triệu người theo dõi của tài khoản\nDương Minh Tuyền vì vi phạm chính sách bạo lực."
+        },
+        "LOGIN": {
+            "SUBJECT": "Chào %{firstName}, Quang Liêm thắng ván ba giải cờ vua Dubai",
+            "BODY": "Nhiều chuyến đi công tác nước ngoài của cán bộ thật ra là đi \"du lịch đúng quy trình\"."
+        }
+    }
+}

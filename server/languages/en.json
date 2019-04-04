@@ -1,0 +1,13 @@
+{
+    "KEY": "ENGLISH",
+    "EMAIL": {
+        "REGISTRATION": {
+            "SUBJECT": "Hello %{firstName}, Keep your eyes peeled for new promotions and discounts",
+            "BODY": "You are receiving this email because you are a registered member of www.AliExpress.com. To unsubscribe from future similar promotional emails"
+        },
+        "LOGIN": {
+            "SUBJECT": "Hello %{firstName}, Don’t miss any Grab emails",
+            "BODY": "Psst... if you are a Gmail user, you can simply drag the email from the Promotional to Primary tab. That's it!"
+        }
+    }
+}
