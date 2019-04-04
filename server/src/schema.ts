@@ -1,4 +1,3 @@
-import { Sequelize } from 'sequelize';
 import {
     GraphQLObjectType,
     GraphQLInt,
@@ -6,7 +5,7 @@ import {
     GraphQLList,
     GraphQLSchema
 } from 'graphql';
-import { User, Todo } from './refs';
+import { queryAllTodos, queryTodoById, queryUserById, queryAllUsers } from './refs';
 
 const userType = new GraphQLObjectType({
     name: 'User',
@@ -34,33 +33,29 @@ const rootQueryType = new GraphQLObjectType({
             type: userType,
             args: { user_id: { type: GraphQLInt } },
             resolve: async (parent, args) => {
-                const whereClause = {
-                    where: { user_id: args.user_id },
-                    include: [{ model: Todo, where: { user_id: Sequelize.col('todos.user_id') } }]
-                };
-                const user = await User.findOne(whereClause);
-                return user.toJSON();
+                const user = await queryUserById(args.user_id);
+                return user;
             }
         },
         todo: {
             type: todoType,
             args: { todo_id: { type: GraphQLInt } },
             resolve: async (parent, args) => {
-                const todo = await Todo.findOne({ where: { todo_id: args.todo_id } });
-                return todo.toJSON();
+                const todo = await queryTodoById(args.todo_id);
+                return todo;
             }
         },
         users: {
             type: new GraphQLList(userType),
             resolve: async () => {
-                const users = await User.findAll({ include: [{ model: Todo, where: { user_id: Sequelize.col('todos.user_id') } }] });
+                const users = await queryAllUsers();
                 return users;
             }
         },
         todos: {
             type: new GraphQLList(todoType),
             resolve: async () => {
-                const todos = await Todo.findAll({});
+                const todos = await queryAllTodos();
                 return todos;
             }
         }
