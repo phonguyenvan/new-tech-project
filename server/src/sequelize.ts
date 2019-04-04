@@ -1,3 +1,3 @@
 import { Sequelize } from 'sequelize';
 
-export const sequelize = new Sequelize('mysql://root@localhost:3306/new_tech_knexjs');
+export const sequelize = new Sequelize('mysql://root@localhost:3306/new_tech_knexjs', { logging: false });

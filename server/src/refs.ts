@@ -1,3 +1,3 @@
 export { sequelize } from './sequelize';
-export { User, Todo } from './models';
+export { User, Todo, UserModel, TodoModel } from './models';
 export { queryAllTodos, queryTodoById, queryUserById, queryAllUsers } from './services';
