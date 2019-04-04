@@ -1,8 +1,23 @@
 module.exports = {
+  test: {
+    client: 'mysql',
+    connection: {
+      database: 'new_tech_test',
+      user:     'root',
+      password: null
+    },
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      tableName: 'knex_migrations'
+    }
+  },
   development: {
     client: 'mysql',
     connection: {
-      database: 'new_tech_knexjs',
+      database: 'new_tech',
       user:     'root',
       password: null
     },
