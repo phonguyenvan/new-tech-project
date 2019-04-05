@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "node-polyglot": "^2.3.0"
+  },
+  "devDependencies": {
+    "testdouble": "^3.11.0"
   }
 }
